@@ -92,6 +92,17 @@ class wordSearcher(object):
 
     # )
 
+    def print_result_by_indexes(self):
+        result_string = ""
+        for idx_pair in self._idx_pair_list:
+            x, y = idx_pair
+            result_string += self._word_search_list[x][y]
+        return result_string
+
+    def search_begin(self):
+        found = self.found_first_char()
+        self.search_match(found, 1)
+
     def colliniear(self, ax, ay, bx, by, cx, cy):
         return ax * (by - cy) + bx * (cy - ay) + cx * (ay - by) == 0
 
@@ -201,18 +212,23 @@ word_search_txt = word_search_txt[1:]
 
 ws = wordSearcher()
 ws.gen_word_search_list(word_search_txt)
-found = ws.found_first_char()
-ws.search_match(found, 1)
+ws.search_begin()
+# found = ws.found_first_char()
+# ws.search_match(found, 1)
 print(
     ws._idx_pair_list
 )
 
-print()
-for idx_pair in ws._idx_pair_list:
-    # print(idx_pair)
-    x, y = idx_pair
-    print(ws._word_search_list[x][y], end="")
-print()
+print(
+    ws.print_result_by_indexes()
+)
+
+# print()
+# for idx_pair in ws._idx_pair_list:
+#     # print(idx_pair)
+#     x, y = idx_pair
+#     print(ws._word_search_list[x][y], end="")
+# print()
 
 # f = get_neighbour_idx(1, 1)
 # print(
