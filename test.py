@@ -102,6 +102,9 @@ class WordSearcher(object):
         self._text_to_search = __text_to_search
         found = self.found_first_char()
         self.search_match(found, 1)
+        print(
+            self._idx_pair_list
+        )
 
     def colliniear(self, ax, ay, bx, by, cx, cy):
         return ax * (by - cy) + bx * (cy - ay) + cx * (ay - by) == 0
@@ -214,11 +217,6 @@ text_to_search = "mazsola"
 ws = WordSearcher()
 ws.gen_word_search_list(word_search_txt)
 ws.search_begin(text_to_search)
-# found = ws.found_first_char()
-# ws.search_match(found, 1)
-print(
-    ws._idx_pair_list
-)
 
 print(
     ws.print_result_by_indexes()
