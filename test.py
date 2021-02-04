@@ -5,7 +5,6 @@ print(
 
 # word_search_list = [["."] * 7] * 7
 # word_search_list = [["" for i in range(7)] for j in range(7)]
-text_to_search = "mazsola"
 
 # print(
 #     word_search_list
@@ -18,7 +17,7 @@ text_to_search = "mazsola"
 # )
 
 
-class wordSearcher(object):
+class WordSearcher(object):
 
     _word_search_list = [["" for i in range(7)] for j in range(7)]
 
@@ -79,7 +78,7 @@ class wordSearcher(object):
                 print(
                     x, end=", "
                 )
-                if text_to_search[0] == x:
+                if self._text_to_search[0] == x:
                     found_msg = "found first char %d:%d" % (idx_x, idx_y)
                     found = [idx_x, idx_y]
             print()
@@ -99,7 +98,8 @@ class wordSearcher(object):
             result_string += self._word_search_list[x][y]
         return result_string
 
-    def search_begin(self):
+    def search_begin(self, __text_to_search):
+        self._text_to_search = __text_to_search
         found = self.found_first_char()
         self.search_match(found, 1)
 
@@ -209,10 +209,11 @@ asdsolm
 
 word_search_txt = word_search_txt[1:]
 
+text_to_search = "mazsola"
 
-ws = wordSearcher()
+ws = WordSearcher()
 ws.gen_word_search_list(word_search_txt)
-ws.search_begin()
+ws.search_begin(text_to_search)
 # found = ws.found_first_char()
 # ws.search_match(found, 1)
 print(
@@ -222,6 +223,7 @@ print(
 print(
     ws.print_result_by_indexes()
 )
+assert text_to_search == ws.print_result_by_indexes()
 
 # print()
 # for idx_pair in ws._idx_pair_list:
