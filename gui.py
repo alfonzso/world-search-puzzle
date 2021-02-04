@@ -147,34 +147,26 @@ class ExampleApp(tk.Tk):
         # )
 
         # text_to_search = "görögdinnye"
-        text_to_search = "ananász"
-        _ws = WordSearcher()
-        _ws.gen_word_search_list(data)
-        _ws.search_begin(text_to_search)
-        result = _ws.print_result_by_indexes()
-        print(
-            "result:", result
-        )
-        data_ws = _ws._idx_pair_list
+        # text_to_search = "ananász"
+        text_to_search_list = [
+            "görögdinnye",
+            "ananász"
+        ]
+        for text in text_to_search_list:
+            _ws = WordSearcher()
+            _ws.gen_word_search_list(data)
+            _ws.search_begin(text)
+            result = _ws.print_result_by_indexes()
+            print(
+                "result:", result
+            )
+            data_ws = _ws._idx_pair_list
 
-        # data_ws = [[9, 11], [10, 11], [11, 11], [12, 11], [13, 11], [14, 11], [15, 11], [16, 11], [17, 11], [18, 11], [19, 11]]
-        # for idx_pair in data_ws:
-        #     x, y = idx_pair
-        #     res = row_idx_list[x][y]
-        #     print(
-        #         res
-        #     )
-        fx, fy = data_ws[0]
-        lx, ly = data_ws[-1]
-        idx_0 = row_idx_list[fx][fy]
-        idx_1 = row_idx_list[lx][ly]
-        print(
-            idx_0,
-            idx_1
-        )
-        x1, y1 = idx_0
-        x2, y2 = idx_1
-        canvas.create_line(x1 + 5, y1, x2 + 5, y2, width=10, fill='green', stipple='gray50')
+            fx, fy = data_ws[0]
+            lx, ly = data_ws[-1]
+            x1, y1 = row_idx_list[fx][fy]
+            x2, y2 = row_idx_list[lx][ly]
+            canvas.create_line(x1 + 5, y1, x2 + 5, y2, width=10, fill='green', stipple='gray50')
         # t.set(0, 0, "Hello, world")
 
 
