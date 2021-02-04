@@ -4,14 +4,6 @@ class WordSearcher(object):
     _word_search_list = None
     _idx_pair_list = None
 
-    # def __enter__(self):
-    #     return self
-
-    # def __exit__(self, *args):
-    #     # del self._word_search_list
-    #     self._word_search_list = []
-    #     # del self._idx_pair_list
-    #     self._idx_pair_list = []
     def __init__(self) -> None:
         super().__init__()
         self._word_search_list = [["" for i in range(7)] for j in range(7)]
@@ -100,23 +92,12 @@ class WordSearcher(object):
     def colliniear(self, ax, ay, bx, by, cx, cy):
         return ax * (by - cy) + bx * (cy - ay) + cx * (ay - by) == 0
 
-    # for x, y in get_neighbour_idx(1, 1):
 
     def len_is_ok(self, x):
         return x < len(self._word_search_list)
 
     def search_match(self, current_idx_pair, letter_idx):
 
-        # print(
-        #   letter_idx + 1 , len(text_to_search)
-        # )
-        # if letter_idx + 1 == len(text_to_search):
-        #     return
-        # idx_pair_list.append(current_idx_pair)
-        # if letter_idx > 2 and not colliniear(*idx_pair_list[0], *idx_pair_list[1], *current_idx_pair):
-        #     return
-        # else:
-        #     # print("->" * letter_idx, x, y, word_search_list[x][y])
         match = False
         self._idx_pair_list.append(current_idx_pair)
         for x, y in self.get_neighbour_idx(*current_idx_pair):
@@ -144,70 +125,3 @@ class WordSearcher(object):
         pass
         return match
 
-
-# ax = 0
-# ay = 0
-
-# bx = 1
-# by = 1
-
-# cx = 2
-# cy = 2
-
-# fff = ax * (by - cy) + bx * (cy - ay) + cx * (ay - by)
-
-# print(
-#     fff
-# )
-
-
-# word_search_txt = """
-# msdfasd
-# aadfasd
-# aszfasd
-# asdsasd
-# asdsoas
-# asdsold
-# asdsola
-# """
-# word_search_txt = """
-# asdsola
-# asdsold
-# asdsoas
-# asdsasd
-# aszfasd
-# aadfasd
-# msdfasd
-# """
-# word_search_txt = """
-# msdsola
-# asdsola
-# zsdsola
-# ssdsola
-# osdsola
-# lsdsola
-# asdsola
-# # """
-# word_search_txt = """
-# asdsola
-# aldsola
-# asosola
-# asdsola
-# asdszla
-# asdsoaa
-# asdsolm
-# """
-
-
-# word_search_txt = word_search_txt[1:]
-
-# text_to_search = "mazsola"
-
-# ws = WordSearcher()
-# ws.gen_word_search_list(word_search_txt)
-# ws.search_begin(text_to_search)
-
-# print(
-#     ws.print_result_by_indexes()
-# )
-# assert text_to_search == ws.print_result_by_indexes()
