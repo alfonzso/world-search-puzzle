@@ -1,25 +1,21 @@
-print(
-    "pocok"
-)
-
-
-# word_search_list = [["."] * 7] * 7
-# word_search_list = [["" for i in range(7)] for j in range(7)]
-
-# print(
-#     word_search_list
-# )
-
-# word_search_list[0][0] = "f"
-
-# print(
-#     word_search_list
-# )
-
 
 class WordSearcher(object):
 
-    _word_search_list = [["" for i in range(7)] for j in range(7)]
+    _word_search_list = None
+    _idx_pair_list = None
+
+    # def __enter__(self):
+    #     return self
+
+    # def __exit__(self, *args):
+    #     # del self._word_search_list
+    #     self._word_search_list = []
+    #     # del self._idx_pair_list
+    #     self._idx_pair_list = []
+    def __init__(self) -> None:
+        super().__init__()
+        self._word_search_list = [["" for i in range(7)] for j in range(7)]
+        self._idx_pair_list = []
 
     def remove_none(self, _list):
         a = []
@@ -85,11 +81,6 @@ class WordSearcher(object):
         print(found_msg)
         return found
 
-    # print(
-    #     "\n",
-    #     found_msg
-
-    # )
 
     def print_result_by_indexes(self):
         result_string = ""
@@ -111,8 +102,6 @@ class WordSearcher(object):
 
     # for x, y in get_neighbour_idx(1, 1):
 
-    _idx_pair_list = []
-
     def len_is_ok(self, x):
         return x < len(self._word_search_list)
 
@@ -132,20 +121,20 @@ class WordSearcher(object):
         self._idx_pair_list.append(current_idx_pair)
         for x, y in self.get_neighbour_idx(*current_idx_pair):
             # print("->" * letter_idx, x, y, word_search_list[x][y])
-            if self.len_is_ok(x) and self.len_is_ok(y) and self._word_search_list[x][y] == text_to_search[letter_idx]:
+            if self.len_is_ok(x) and self.len_is_ok(y) and self._word_search_list[x][y] == self._text_to_search[letter_idx]:
                 # if word_search_list[x][y] == text_to_search[letter_idx]:
                 # letter_idx+1
 
                 if letter_idx > 2 and self.colliniear(*self._idx_pair_list[0], *self._idx_pair_list[1], x, y):
                     print("->" * letter_idx, x, y, self._word_search_list[x][y])
-                    if letter_idx + 1 < len(text_to_search):
+                    if letter_idx + 1 < len(self._text_to_search):
                         match = self.search_match([x, y], letter_idx + 1)
                     else:
                         self._idx_pair_list.append([x, y])
                         return True
                 if letter_idx <= 2 and not match:
                     print("->" * letter_idx, x, y, self._word_search_list[x][y])
-                    if letter_idx + 1 < len(text_to_search):
+                    if letter_idx + 1 < len(self._text_to_search):
                         match = self.search_match([x, y], letter_idx + 1)
         # if letter_idx + 1 < len(text_to_search)-1:
         if not match:
@@ -198,51 +187,27 @@ class WordSearcher(object):
 # osdsola
 # lsdsola
 # asdsola
+# # """
+# word_search_txt = """
+# asdsola
+# aldsola
+# asosola
+# asdsola
+# asdszla
+# asdsoaa
+# asdsolm
 # """
-word_search_txt = """
-asdsola
-aldsola
-asosola
-asdsola
-asdszla
-asdsoaa
-asdsolm
-"""
 
 
-word_search_txt = word_search_txt[1:]
+# word_search_txt = word_search_txt[1:]
 
-text_to_search = "mazsola"
+# text_to_search = "mazsola"
 
-ws = WordSearcher()
-ws.gen_word_search_list(word_search_txt)
-ws.search_begin(text_to_search)
-
-print(
-    ws.print_result_by_indexes()
-)
-assert text_to_search == ws.print_result_by_indexes()
-
-# print()
-# for idx_pair in ws._idx_pair_list:
-#     # print(idx_pair)
-#     x, y = idx_pair
-#     print(ws._word_search_list[x][y], end="")
-# print()
-
-# f = get_neighbour_idx(1, 1)
-# print(
-#     f
-# )
-
-# ff = f[0] + f[1]
+# ws = WordSearcher()
+# ws.gen_word_search_list(word_search_txt)
+# ws.search_begin(text_to_search)
 
 # print(
-#     ff
+#     ws.print_result_by_indexes()
 # )
-
-# a = []
-
-# print(
-#     a
-# )
+# assert text_to_search == ws.print_result_by_indexes()
