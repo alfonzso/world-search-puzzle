@@ -1,4 +1,5 @@
 # import Tkinter as tk
+from main import WordSearcher
 import tkinter as tk
 
 from tkinter import Tk, Canvas, Frame, BOTH, W
@@ -56,6 +57,8 @@ class ExampleApp(tk.Tk):
         xn = -1
         # canvas.create_line(10, 15, 10, 310)
         # canvas.create_line(20, 15, 20, 310)
+        col_idx_list = None
+        row_idx_list = []
         for row_idx, row in enumerate(data.splitlines()):
 
             # current_row = []
@@ -69,7 +72,7 @@ class ExampleApp(tk.Tk):
             # print(
             #     10 + padding + row_idx, 10 + (padding_step * len(data.splitlines())) + padding_step
             # )
-
+            col_idx_list = []
             for cols_idx, column in enumerate(row):
 
                 # canvas.create_line(cols_idx + col_padding, 15, cols_idx + col_padding, 310)
@@ -101,9 +104,10 @@ class ExampleApp(tk.Tk):
                 # canvas.create_text(10 + t_cols_idx, 22+ row_idx + padding, anchor=W, font="Purisa", text=column)
                 # canvas.create_text(10 + t_cols_idx * 1.19, 22 + row_idx + padding, anchor=W, font="Purisa", text=column)
                 canvas.create_text(20 + cols_idx * 35, 22 + row_idx + padding, anchor=W, font="Purisa", text=column)
-                print(
-                    20 + cols_idx * 35, 22 + row_idx + padding
-                )
+                # print(
+                #     20 + cols_idx * 35, 22 + row_idx + padding
+                # )
+                col_idx_list.append([20 + cols_idx * 35, 22 + row_idx + padding])
                 # print(
                 #     "======>", 20 + cols_idx * 35, 22 + row_idx + padding, row_idx, padding, 22 + len(row) - 1 + (len(row) - 1) * padding_step
                 # )
@@ -116,6 +120,7 @@ class ExampleApp(tk.Tk):
 
             match = True
             padding += padding_step
+            row_idx_list.append(col_idx_list)
 
         # canvas.create_line(10, 430, 455, 430)
         # canvas.create_line(455, 10, 455, 430)
@@ -137,6 +142,39 @@ class ExampleApp(tk.Tk):
         canvas.pack(fill=BOTH, expand=1)
 
         self.geometry('%dx%d' % (xn + 10, yn + 10))
+        # print(
+        #     row_idx_list
+        # )
+
+        # text_to_search = "görögdinnye"
+        text_to_search = "ananász"
+        _ws = WordSearcher()
+        _ws.gen_word_search_list(data)
+        _ws.search_begin(text_to_search)
+        result = _ws.print_result_by_indexes()
+        print(
+            "result:", result
+        )
+        data_ws = _ws._idx_pair_list
+
+        # data_ws = [[9, 11], [10, 11], [11, 11], [12, 11], [13, 11], [14, 11], [15, 11], [16, 11], [17, 11], [18, 11], [19, 11]]
+        # for idx_pair in data_ws:
+        #     x, y = idx_pair
+        #     res = row_idx_list[x][y]
+        #     print(
+        #         res
+        #     )
+        fx, fy = data_ws[0]
+        lx, ly = data_ws[-1]
+        idx_0 = row_idx_list[fx][fy]
+        idx_1 = row_idx_list[lx][ly]
+        print(
+            idx_0,
+            idx_1
+        )
+        x1, y1 = idx_0
+        x2, y2 = idx_1
+        canvas.create_line(x1 + 5, y1, x2 + 5, y2, width=10, fill='green', stipple='gray50')
         # t.set(0, 0, "Hello, world")
 
 

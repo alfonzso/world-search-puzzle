@@ -3,7 +3,7 @@ class WordSearcher(object):
 
     _word_search_list = None
     _word_search_txt = None
-    _idx_pair_list = []
+    _idx_pair_list = None
 
     _match = False
 
@@ -11,6 +11,7 @@ class WordSearcher(object):
         # super().__init__()
         self._word_search_txt = __word_search_txt
         self._word_search_list = [["" for i in range(len(__word_search_txt.splitlines()[0]))] for j in range(len(__word_search_txt.splitlines()))]
+        self._idx_pair_list = []
 
     def remove_none(self, _list):
         a = []

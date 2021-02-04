@@ -156,5 +156,5 @@ class TestScript(unittest.TestCase):
         # text_to_search = "mazsola"
         text_to_search = "görögdinnye"
 
-        # expected_idx_pair_list = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6]]
-        self.base(wst, None, text_to_search)
+        expected_idx_pair_list = [[9, 11], [10, 11], [11, 11], [12, 11], [13, 11], [14, 11], [15, 11], [16, 11], [17, 11], [18, 11], [19, 11]]
+        self.base(wst, expected_idx_pair_list, text_to_search)
