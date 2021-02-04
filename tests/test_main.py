@@ -48,6 +48,7 @@ asdsola
 asdsola
 asdsola
 """,
+
     """
 almatjdatolyawisertm
 asdfghihjkeperlzacba
@@ -71,6 +72,29 @@ ereuicopőúayioacbety
 ananászűücseresznyee
 """
 ]
+
+#     """
+# almatjdatolyawisertg
+# asdfghihjkeperlzacbö
+# íyxcvbónmqertzueiopr
+# szőlőszibarackadfghö
+# zetfhjklékörteéeíyxg
+# idvbodzabbasdgfrgghr
+# lertzudviahjkrlékivi
+# vipasdfggnhjkeéróopn
+# avokádósmálnasumksré
+# esmxcdfgenhgjkléuáűs
+# röeüőáltgfaöertzsuiá
+# erluiopkgdtruiolzafr
+# öüoődyxvymköwamcbebg
+# fráfonyasárgabaracka
+# papajaefbasdfhnjkléd
+# úöghjribizlirwdftgái
+# ertzuaioropnéruhjkln
+# ertmangósüpnlkletukn
+# ereuicopőúayioacbety
+# ananászűücseresznyee
+# """
 
 
 class TestScript(unittest.TestCase):
@@ -129,6 +153,7 @@ class TestScript(unittest.TestCase):
 
     def test_search_05(self):
         wst = word_search_txt_list[5][1:]
+        # text_to_search = "mazsola"
         text_to_search = "görögdinnye"
 
         # expected_idx_pair_list = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6]]

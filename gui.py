@@ -4,8 +4,7 @@ import tkinter as tk
 from tkinter import Tk, Canvas, Frame, BOTH, W
 
 
-data = """
-almatjdatolyawisertm
+data = """almatjdatolyawisertm
 asdfghihjkeperlzacba
 íyxcvbónmqertzueiopn
 szőlőszibarackadfghd
@@ -27,6 +26,15 @@ ereuicopőúayioacbety
 ananászűücseresznyee
 """
 
+# data = """mazsola
+# asdsola
+# asdsola
+# asdsola
+# asdsola
+# asdsola
+# asdsola
+# """
+
 
 class ExampleApp(tk.Tk):
     def __init__(self):
@@ -34,17 +42,101 @@ class ExampleApp(tk.Tk):
 
         # t.pack(fill=BOTH, expand=1)
         canvas = Canvas(self)
-        canvas.create_line(0, 0, 200, 25)
+        # canvas.create_line(0, 0, 200, 25)
+        # canvas.create_line(1, 10, 200, 10)
+        # canvas.create_line(1, 20, 200, 20)
+        # canvas.create_line(1, 30, 200, 30)
+        padding = 0
+        padding_step = 20
+        col_padding = 0
+        t_row_idx = 1
+        t_cols_idx = 1
+        match = False
+        yn = -1
+        xn = -1
+        # canvas.create_line(10, 15, 10, 310)
+        # canvas.create_line(20, 15, 20, 310)
+        for row_idx, row in enumerate(data.splitlines()):
 
+            # current_row = []
+            # canvas.create_line(10, row_idx + padding, 310, row_idx + padding)
+            # print(
+            #     10 +  len(row)  * 35
+            # )
+            xn = 10 + len(row) * 35
+            canvas.create_line(10, 10 + padding + row_idx, xn, 10 + padding + row_idx)
 
-        canvas.create_text(20, 30, anchor=W, font="Purisa",
-            text="a")
+            # print(
+            #     10 + padding + row_idx, 10 + (padding_step * len(data.splitlines())) + padding_step
+            # )
+
+            for cols_idx, column in enumerate(row):
+
+                # canvas.create_line(cols_idx + col_padding, 15, cols_idx + col_padding, 310)
+                # t_row_idx = row_idx * 2 + 22
+                # t_cols_idx = cols_idx * 20 + 6
+                if not match:
+                    # canvas.create_line(10 + (col_padding + row_idx) * 1.2, 10, 10 + (col_padding + row_idx) * 1.2, 430)
+                    # canvas.create_line(10 + (col_padding) * 1.2, 10, 10 + (col_padding) * 1.2, 430)
+                    yn = 10 + (22 + len(row) - 1 + (len(row) - 1) * padding_step)
+                    # canvas.create_line(10 + cols_idx * 35, 10, 10 + cols_idx * 35, 10 + (padding_step * len(data.splitlines())) + padding_step)
+                    canvas.create_line(10 + cols_idx * 35, 10, 10 + cols_idx * 35, yn)
+                    # print(
+                    #     10 + cols_idx * 35, 10, 10 + cols_idx * 35, 430
+                    # )
+                    # print(
+                    #     10 + cols_idx * 35, "--->"
+                    # )
+                    # canvas.create_line(10 + t_row_idx, 15, 10 + t_cols_idx, 420)
+                # t_row_idx = padding * 2 + 22
+                # t_cols_idx = padding * 20 + 3.5
+                # t_row_idx = t_row_idx * 2 + 22
+                # t_cols_idx = t_cols_idx * 20 + 3.5
+                # cols_idx**
+                # print(
+                #     cols_idx + col_padding, "---->", cols_idx + col_padding
+                # )
+                # canvas.create_text(10+t_cols_idx, t_row_idx, anchor=W, font="Purisa", text="a")
+                # canvas.create_text(10 + t_cols_idx, t_row_idx + padding, anchor=W, font="Purisa", text=column)
+                # canvas.create_text(10 + t_cols_idx, 22+ row_idx + padding, anchor=W, font="Purisa", text=column)
+                # canvas.create_text(10 + t_cols_idx * 1.19, 22 + row_idx + padding, anchor=W, font="Purisa", text=column)
+                canvas.create_text(20 + cols_idx * 35, 22 + row_idx + padding, anchor=W, font="Purisa", text=column)
+                print(
+                    20 + cols_idx * 35, 22 + row_idx + padding
+                )
+                # print(
+                #     "======>", 20 + cols_idx * 35, 22 + row_idx + padding, row_idx, padding, 22 + len(row) - 1 + (len(row) - 1) * padding_step
+                # )
+                # 22+  len(row) -1 + (len(row) -1) * padding_step
+                # (22 + (len(row) - 1) + (padding * (len(row) - 1)))
+                # canvas.create_text(8 + t_cols_idx, t_row_idx , anchor=W, font="Purisa", text=column)
+                # canvas.create_text(8 * 20 + 3.5, padding * 2 + 22, anchor=W, font="Purisa", text=column)
+                # canvas.create_text(t_row_idx, t_cols_idx, anchor=W, font="Purisa", text="a")
+                col_padding += 25
+
+            match = True
+            padding += padding_step
+
+        # canvas.create_line(10, 430, 455, 430)
+        # canvas.create_line(455, 10, 455, 430)
+        # 10 + ( 7 * 20 ) + 20  = 170 ==> 158 // 12
+        # 10 + ( 20 * 10 ) + 20 = 430 ==> 430
+        # yn = 10 + (padding_step * len(data.splitlines())) + padding_step
+        # yn = 10 + (22 + len(row) - 1 + (len(row) - 1) * padding_step)
+        # print(yn)
+        # yn = 158
+        canvas.create_line(10, yn, xn, yn)
+        canvas.create_line(xn, 10, xn, yn)
+
+        # canvas.create_text(20, 30, anchor=W, font="Purisa", text="a")
 
         # t = SimpleTable(canvas, 10, 5)
         # t.pack(side="top", fill="x")
         # t.pack(fill=BOTH, expand=1)
 
         canvas.pack(fill=BOTH, expand=1)
+
+        self.geometry('%dx%d' % (xn + 10, yn + 10))
         # t.set(0, 0, "Hello, world")
 
 
@@ -92,4 +184,6 @@ class SimpleTable(tk.Frame):
 
 if __name__ == "__main__":
     app = ExampleApp()
+    # app.geometry('460x460')
+
     app.mainloop()
