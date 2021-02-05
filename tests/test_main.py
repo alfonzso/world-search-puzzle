@@ -154,7 +154,35 @@ class TestScript(unittest.TestCase):
     def test_search_05(self):
         wst = word_search_txt_list[5][1:]
         # text_to_search = "mazsola"
-        text_to_search = "görögdinnye"
+        # text_to_search = "görögdinnye"
+        # text_to_search = "alma"
+        text_to_search = "szőlő"
 
-        expected_idx_pair_list = [[9, 11], [10, 11], [11, 11], [12, 11], [13, 11], [14, 11], [15, 11], [16, 11], [17, 11], [18, 11], [19, 11]]
-        self.base(wst, expected_idx_pair_list, text_to_search)
+        # expected_idx_pair_list = [[9, 11], [10, 11], [11, 11], [12, 11], [13, 11], [14, 11], [15, 11], [16, 11], [17, 11], [18, 11], [19, 11]]
+        self.base(wst, None, text_to_search)
+
+    def test_it(self):
+        import math
+
+        class Point:
+            x = -1
+            y = -1
+
+            def __init__(self, x, y) -> None:
+                self.x = x
+                self.y = y
+
+        a = Point(0, 0)
+        # b = Point(1, 1)
+        b = Point(5, 5)
+
+        c = Point(-1, -1)
+
+        def distance(a, b):
+            return math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
+
+        print(
+            distance(a, b),
+            distance(b, a),
+            distance(a, c),
+        )

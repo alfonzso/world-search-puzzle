@@ -150,7 +150,12 @@ class ExampleApp(tk.Tk):
         # text_to_search = "ananász"
         text_to_search_list = [
             "görögdinnye",
-            "ananász"
+            "ananász",
+            "alma",
+            "szőlő",
+            "őszibarack",
+            "sárgadinnye",
+            "szeder",
         ]
         for text in text_to_search_list:
             _ws = WordSearcher()
@@ -160,12 +165,18 @@ class ExampleApp(tk.Tk):
             print(
                 "result:", result
             )
+            if not result:
+                print("ERROR: %s not found ! " % text)
+                break
             data_ws = _ws._idx_pair_list
 
             fx, fy = data_ws[0]
             lx, ly = data_ws[-1]
             x1, y1 = row_idx_list[fx][fy]
             x2, y2 = row_idx_list[lx][ly]
+            print(
+                "idx: ", x1 + 5, y1, x2 + 5, y2
+            )
             canvas.create_line(x1 + 5, y1, x2 + 5, y2, width=10, fill='green', stipple='gray50')
         # t.set(0, 0, "Hello, world")
 
