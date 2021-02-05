@@ -19,11 +19,11 @@ röeüőáltgfaöertzsuiá
 erluiopkgdtruiolzafr
 öüoődyxvymköwamcbebg
 fráfonyasárgabaracka
-papajaefbasdfhnjkléd
-úöghjribizlirwdftgái
-ertzuaioropnéruhjkln
-ertmangósüpnlkletukn
-ereuicopőúayioacbety
+papajaefbasdfhnjklkd
+úöghjribizlirwdftgoi
+ertzuaioropnéruhjkcn
+ertmangósüpnlkletuon
+ereuicopőúayioacbepy
 ananászűücseresznyee
 """
 
@@ -156,6 +156,7 @@ class ExampleApp(tk.Tk):
             "őszibarack",
             "sárgadinnye",
             "szeder",
+            "pocok",
         ]
         for text in text_to_search_list:
             _ws = WordSearcher()
