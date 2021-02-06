@@ -64,11 +64,11 @@ röeüőáltgfaöertzsuiá
 erluiopkgdtruiolzafr
 öüoődyxvymköwamcbebg
 fráfonyasárgabaracka
-papajaefbasdfhnjkléd
-úöghjribizlirwdftgái
-ertzuaioropnéruhjkln
-ertmangósüpnlkletukn
-ereuicopőúayioacbety
+papajaefbasdfhnjklkd
+úöghjribizlirwdftgoi
+ertzuaioropnéruhjkcn
+ertmangósüpnlkletuon
+ereuicopőúayioacbepy
 ananászűücseresznyee
 """
 ]
@@ -107,7 +107,7 @@ class TestScript(unittest.TestCase):
         print(
             result
         )
-        # self.assertEqual(text_to_search, self._ws.print_result_by_indexes())
+        self.assertEqual(text_to_search, self._ws.print_result_by_indexes())
         if expected_idx_pair_list:
             self.assertEqual(expected_idx_pair_list, self._ws._idx_pair_list)
 
@@ -151,38 +151,30 @@ class TestScript(unittest.TestCase):
         expected_idx_pair_list = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6]]
         self.base(wst, expected_idx_pair_list, text_to_search)
 
-    def test_search_05(self):
+    def test_search_gorog(self):
         wst = word_search_txt_list[5][1:]
-        # text_to_search = "mazsola"
-        # text_to_search = "görögdinnye"
-        # text_to_search = "alma"
+        text_to_search = "görögdinnye"
+
+        expected_idx_pair_list = [[9, 11], [10, 11], [11, 11], [12, 11], [13, 11], [14, 11], [15, 11], [16, 11], [17, 11], [18, 11], [19, 11]]
+        self.base(wst, expected_idx_pair_list, text_to_search)
+
+    def test_search_alma(self):
+        wst = word_search_txt_list[5][1:]
+        text_to_search = "alma"
+
+        expected_idx_pair_list = [[0, 0], [0, 1], [0, 2], [0, 3]]
+        self.base(wst, expected_idx_pair_list, text_to_search)
+
+    def test_search_szolo(self):
+        wst = word_search_txt_list[5][1:]
         text_to_search = "szőlő"
 
-        # expected_idx_pair_list = [[9, 11], [10, 11], [11, 11], [12, 11], [13, 11], [14, 11], [15, 11], [16, 11], [17, 11], [18, 11], [19, 11]]
-        self.base(wst, None, text_to_search)
+        expected_idx_pair_list = [[3, 0], [3, 1], [3, 2], [3, 3], [3, 4]]
+        self.base(wst, expected_idx_pair_list, text_to_search)
 
-    def test_it(self):
-        import math
+    def test_search_pocok(self):
+        wst = word_search_txt_list[5][1:]
+        text_to_search = "pocok"
 
-        class Point:
-            x = -1
-            y = -1
-
-            def __init__(self, x, y) -> None:
-                self.x = x
-                self.y = y
-
-        a = Point(0, 0)
-        # b = Point(1, 1)
-        b = Point(5, 5)
-
-        c = Point(-1, -1)
-
-        def distance(a, b):
-            return math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
-
-        print(
-            distance(a, b),
-            distance(b, a),
-            distance(a, c),
-        )
+        expected_idx_pair_list = [[18, 18], [17, 18], [16, 18], [15, 18], [14, 18]]
+        self.base(wst, expected_idx_pair_list, text_to_search)

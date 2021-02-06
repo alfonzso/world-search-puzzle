@@ -123,27 +123,15 @@ class WordSearcher(object):
 
         self._idx_pair_list.append(current_idx_pair)
         for x, y in self.get_neighbour_idx(*current_idx_pair):
-            # print("->" * letter_idx, x, y, word_search_list[x][y])
             if self.len_is_ok(x) and self.len_is_ok(y) and self._word_search_list[x][y] == self._text_to_search[letter_idx]:
-                # if word_search_list[x][y] == text_to_search[letter_idx]:
-                # letter_idx+1
-
                 if letter_idx > 2 and self.is_collinear(x, y):
                     _distance = self.distance(self._idx_pair_list[0], [x, y])
                     if len(self._idx_distance_list) != 0:
-                        if self._idx_distance_list[-1] < _distance:
-                            self._idx_distance_list.append(_distance)
-                        else:
-                            # return False
-                            # break
+                        if self._idx_distance_list[-1] > _distance:
                             continue
-                    else:
-                        self._idx_distance_list.append(_distance)
-                    # print(
-                    #     self.distance(self._idx_distance_list[-1], [x, y])
-                    #     self.distance(self._idx_pair_list[0], [x, y])
-                    #     self.distance(self._idx_pair_list[0], [x, y])
-                    # )
+
+                    self._idx_distance_list.append(_distance)
+
                     print("->" * letter_idx, x, y, self._word_search_list[x][y])
                     if letter_idx + 1 < len(self._text_to_search):
                         self._match = self.search_match([x, y], letter_idx + 1)
@@ -154,10 +142,7 @@ class WordSearcher(object):
                     print("->" * letter_idx, x, y, self._word_search_list[x][y])
                     if letter_idx + 1 < len(self._text_to_search):
                         self._match = self.search_match([x, y], letter_idx + 1)
-        # if letter_idx + 1 < len(text_to_search)-1:
         if not self._match:
-            # print(letter_idx + 1 , len(text_to_search))
-            # print(idx_pair_list)
             self._idx_pair_list.pop()
             if len(self._idx_distance_list) != 0:
                 self._idx_distance_list.pop()
