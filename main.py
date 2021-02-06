@@ -36,7 +36,7 @@ class WordSearcher(object):
     def get_neighbours(self, x, y):
         final_top = []
 
-        def less_or_eq_than_zero(x_y):
+        def less_than_zero(x_y):
             x, y = x_y
             if (x < 0 or y < 0):
                 return True
@@ -51,20 +51,11 @@ class WordSearcher(object):
             left = [x + i, y - 1]
             middle = [x + i, y]
             right = [x + i, y + 1]
-            # if not (left[0] >= 0 and left[1] >= 0):
-            #     left = None
-            # if not (left[0] >= 0 and left[1] >= 0) or not (left[0] < len(self._word_search_list) and left[1] < len(self._word_search_list[0])):
-            # if (left[0] <= 0 or left[1] <= 0) or (left[0] >= len(self._word_search_list) or left[1] >= len(self._word_search_list[0])):
-            # if less_or_eq_than_zero(left) or (left[0] >= len(self._word_search_list) or left[1] >= len(self._word_search_list[0])):
-            if less_or_eq_than_zero(left) or greater_or_eq_than_ws_list(left):
+            if less_than_zero(left) or greater_or_eq_than_ws_list(left):
                 left = None
-            # if not (middle[0] >= 0 and middle[1] >= 0) or i == 0:
-            #     middle = None
-            if less_or_eq_than_zero(middle) or greater_or_eq_than_ws_list(middle) or i == 0:  # not (middle[0] >= 0 and middle[1] >= 0) or i == 0:
+            if less_than_zero(middle) or greater_or_eq_than_ws_list(middle) or i == 0:
                 middle = None
-            # if not (right[0] >= 0 and right[1] >= 0):
-            #     right = None
-            if less_or_eq_than_zero(right) or greater_or_eq_than_ws_list(right):  # not (right[0] >= 0 and right[1] >= 0):
+            if less_than_zero(right) or greater_or_eq_than_ws_list(right):
                 right = None
             final_top.append([left, middle, right])
         return final_top
@@ -110,9 +101,6 @@ class WordSearcher(object):
     def colliniear(ax, ay, bx, by, cx, cy):
         return ax * (by - cy) + bx * (cy - ay) + cx * (ay - by) == 0
 
-    def len_is_ok(self, x):
-        return x < len(self._word_search_list)
-
     def is_collinear(self, x, y):
         return self.colliniear(*self._idx_pair_list[0], *self._idx_pair_list[1], x, y)
 
@@ -122,14 +110,14 @@ class WordSearcher(object):
         bx, by = b
         return math.sqrt((ax - bx)**2 + (ay - by)**2)
 
-    def search_match(self, current_idx_pair, letter_idx):
+    def search_match(self, current_idx_pair, char_idx):
 
         self._idx_pair_list.append(current_idx_pair)
         for x, y in self.get_neighbours_arranged(*current_idx_pair):
-            if self.len_is_ok(x) and \
-               self.len_is_ok(y) and \
-               self._word_search_list[x][y] == self._text_to_search[letter_idx]:
-                if letter_idx > 2 and self.is_collinear(x, y):
+            if self._word_search_list[x][y] == self._text_to_search[char_idx]:  # if char you are looking for is matched in _word_search_list
+                if char_idx > 2 and self.is_collinear(x, y):  # if first 2 point and current point is on a same line
+
+                    # distance check for not going backwards in search, only forwards
                     _distance = self.distance(self._idx_pair_list[0], [x, y])
                     if len(self._idx_distance_list) != 0:
                         if self._idx_distance_list[-1] > _distance:
@@ -137,19 +125,23 @@ class WordSearcher(object):
 
                     self._idx_distance_list.append(_distance)
 
-                    print("->" * letter_idx, x, y, self._word_search_list[x][y])
-                    if letter_idx + 1 < len(self._text_to_search):
-                        self._match = self.search_match([x, y], letter_idx + 1)
+                    print("->" * char_idx, x, y, self._word_search_list[x][y])
+                    # search continues
+                    if char_idx + 1 < len(self._text_to_search):
+                        self._match = self.search_match([x, y], char_idx + 1)
                     else:
+                        # found the text we looking for, end iteration
                         self._idx_pair_list.append([x, y])
                         return True
-                if letter_idx <= 2 and not self._match:
-                    print("->" * letter_idx, x, y, self._word_search_list[x][y])
-                    if letter_idx + 1 < len(self._text_to_search):
-                        self._match = self.search_match([x, y], letter_idx + 1)
+                # find the first two starting points
+                if char_idx <= 2 and not self._match:
+                    print("->" * char_idx, x, y, self._word_search_list[x][y])
+                    if char_idx + 1 < len(self._text_to_search):
+                        self._match = self.search_match([x, y], char_idx + 1)
+        # if we stepped out the search_match recursive function
+        # and no match found, then we pop the last stored idx and distance idx
         if not self._match:
             self._idx_pair_list.pop()
             if len(self._idx_distance_list) != 0:
                 self._idx_distance_list.pop()
-        pass
         return self._match
