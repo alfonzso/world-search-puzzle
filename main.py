@@ -115,13 +115,13 @@ class WordSearcher(object):
         self._idx_pair_list.append(current_idx_pair)
         for x, y in self.get_neighbours_arranged(*current_idx_pair):
             if self._word_search_list[x][y] == self._text_to_search[char_idx]:  # if char you are looking for is matched in _word_search_list
+
+                _distance = self.distance(self._idx_pair_list[0], [x, y])
                 if char_idx > 2 and self.is_collinear(x, y):  # if first 2 point and current point is on a same line
 
                     # distance check for not going backwards in search, only forwards
-                    _distance = self.distance(self._idx_pair_list[0], [x, y])
-                    if len(self._idx_distance_list) != 0:
-                        if self._idx_distance_list[-1] > _distance:
-                            continue
+                    if self._idx_distance_list[-1] > _distance:
+                        continue
 
                     self._idx_distance_list.append(_distance)
 
@@ -135,6 +135,7 @@ class WordSearcher(object):
                         return True
                 # find the first two starting points
                 if char_idx <= 2 and not self._match:
+                    self._idx_distance_list.append(_distance)
                     print("->" * char_idx, x, y, self._word_search_list[x][y])
                     if char_idx + 1 < len(self._text_to_search):
                         self._match = self.search_match([x, y], char_idx + 1)

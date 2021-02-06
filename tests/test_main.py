@@ -193,3 +193,10 @@ class TestScript(unittest.TestCase):
 
         expected_idx_pair_list = [[18, 18], [17, 18], [16, 18], [15, 18], [14, 18]]
         self.base(wst, expected_idx_pair_list, text_to_search)
+
+    def test_search_kivi(self):
+        wst = word_search_txt_list[5][1:]
+        text_to_search = "kivi"
+
+        expected_idx_pair_list = [[6, 16], [6, 17], [6, 18], [6, 19]]
+        self.base(wst, expected_idx_pair_list, text_to_search)
