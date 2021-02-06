@@ -232,14 +232,27 @@ class TextBox(Text):
     _wid = 200
     _max = -1
     _master = None
+    _b = None
+
+    def hello_button(self):
+
+        print("hellllllllllla")
+        print(
+            self._b.winfo_width()
+        )
 
     def __init__(self, master):
         self._master = master
         Text.__init__(self, master)
         self.place(x=master._xn + 10, y=10, height=self._hei, width=self._wid)
 
+        self._b = Button(master, text="Hello", command=self.hello_button)
+
+        # b.place(x=master._xn + 10, y=10, height=self._hei + 10, width=self._wid)
+        self._b.place(x=master._xn + ((self._wid - 32) / 2), y=self._hei + 10)  # height=10, width=10)
+
         self.bind('<Return>', self.motion)
-        # T.bind('<BackSpace>', neg_motion)
+        self.bind('<BackSpace>', self.neg_motion)
 
     def motion(self, event):
         # T.set
@@ -258,7 +271,27 @@ class TextBox(Text):
 
         if len(_str.splitlines()) >= 2:
             self.place(x=self._master._xn + 10, y=10, height=self._hei, width=self._wid)
+            self._b.place(x=self._master._xn + ((self._wid - 32) / 2), y=self._hei + 10)
         print("Mouse position: (%s %s)" % (event.x, event.y))
+        return
+
+    def neg_motion(self, event):
+        # T.set
+        # global hei
+        # global _max
+        # print(T.winfo_width)
+
+        _str = self.get("1.0", END)
+        print(
+            _str,
+            len(_str.splitlines())
+        )
+        if self._max > len(_str.splitlines()):
+            self._hei -= 12.5
+            _max = len(_str.splitlines())
+            self.place(x=self._master._xn + 10, y=10, height=self._hei, width=self._wid)
+            self._b.place(x=self._master._xn + ((self._wid - 32) / 2), y=self._hei + 10)
+        # print("Mouse position: (%s %s)" % (event.x, event.y))
         return
 
 
