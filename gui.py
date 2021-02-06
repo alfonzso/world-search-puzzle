@@ -1,9 +1,10 @@
 # import Tkinter as tk
 from main import WordSearcher
-import tkinter as tk
+# import tkinter as tk
 
-from tkinter import Tk, Canvas, Frame, BOTH, W
+# from tkinter import Tk, Canvas, Frame, BOTH, W
 
+from tkinter import *
 
 data = """almatjdatolyawisertm
 asdfghihjkeperlzacba
@@ -37,9 +38,12 @@ ananászűücseresznyee
 # """
 
 
-class ExampleApp(tk.Tk):
+class ExampleApp(Tk):
+    _yn = -1
+    _xn = -1
+
     def __init__(self):
-        tk.Tk.__init__(self)
+        Tk.__init__(self)
 
         # t.pack(fill=BOTH, expand=1)
         canvas = Canvas(self)
@@ -53,8 +57,8 @@ class ExampleApp(tk.Tk):
         t_row_idx = 1
         t_cols_idx = 1
         match = False
-        yn = -1
-        xn = -1
+        # self._yn = -1
+        # self._xn = -1
         # canvas.create_line(10, 15, 10, 310)
         # canvas.create_line(20, 15, 20, 310)
         col_idx_list = None
@@ -66,8 +70,8 @@ class ExampleApp(tk.Tk):
             # print(
             #     10 +  len(row)  * 35
             # )
-            xn = 10 + len(row) * 35
-            canvas.create_line(10, 10 + padding + row_idx, xn, 10 + padding + row_idx)
+            self._xn = 10 + len(row) * 35
+            canvas.create_line(10, 10 + padding + row_idx, self._xn, 10 + padding + row_idx)
 
             # print(
             #     10 + padding + row_idx, 10 + (padding_step * len(data.splitlines())) + padding_step
@@ -81,9 +85,9 @@ class ExampleApp(tk.Tk):
                 if not match:
                     # canvas.create_line(10 + (col_padding + row_idx) * 1.2, 10, 10 + (col_padding + row_idx) * 1.2, 430)
                     # canvas.create_line(10 + (col_padding) * 1.2, 10, 10 + (col_padding) * 1.2, 430)
-                    yn = 10 + (22 + len(row) - 1 + (len(row) - 1) * padding_step)
+                    self._yn = 10 + (22 + len(row) - 1 + (len(row) - 1) * padding_step)
                     # canvas.create_line(10 + cols_idx * 35, 10, 10 + cols_idx * 35, 10 + (padding_step * len(data.splitlines())) + padding_step)
-                    canvas.create_line(10 + cols_idx * 35, 10, 10 + cols_idx * 35, yn)
+                    canvas.create_line(10 + cols_idx * 35, 10, 10 + cols_idx * 35, self._yn)
                     # print(
                     #     10 + cols_idx * 35, 10, 10 + cols_idx * 35, 430
                     # )
@@ -130,8 +134,8 @@ class ExampleApp(tk.Tk):
         # yn = 10 + (22 + len(row) - 1 + (len(row) - 1) * padding_step)
         # print(yn)
         # yn = 158
-        canvas.create_line(10, yn, xn, yn)
-        canvas.create_line(xn, 10, xn, yn)
+        canvas.create_line(10, self._yn, self._xn, self._yn)
+        canvas.create_line(self._xn, 10, self._xn, self._yn)
 
         # canvas.create_text(20, 30, anchor=W, font="Purisa", text="a")
 
@@ -141,7 +145,6 @@ class ExampleApp(tk.Tk):
 
         canvas.pack(fill=BOTH, expand=1)
 
-        self.geometry('%dx%d' % (xn + 10, yn + 10))
         # print(
         #     row_idx_list
         # )
@@ -182,7 +185,7 @@ class ExampleApp(tk.Tk):
         # t.set(0, 0, "Hello, world")
 
 
-class SimpleTable(tk.Frame):
+class SimpleTable(Frame):
     def __init__(self, parent, rows=10, columns=2):
         # use black background so it "peeks through" to
         # form grid lines
@@ -224,8 +227,53 @@ class SimpleTable(tk.Frame):
     #     widget.configure(text=value)
 
 
+class TextBox(Text):
+    _hei = 50
+    _wid = 200
+    _max = -1
+    _master = None
+
+    def __init__(self, master):
+        self._master = master
+        Text.__init__(self, master)
+        self.place(x=master._xn + 10, y=10, height=self._hei, width=self._wid)
+
+        self.bind('<Return>', self.motion)
+        # T.bind('<BackSpace>', neg_motion)
+
+    def motion(self, event):
+        # T.set
+        # global hei
+        # global _max
+        # print(T.winfo_width)
+        # self._hei += 12.5
+        self._hei += 16
+        _str = self.get("1.0", END)
+        print(
+            _str,
+            len(_str.splitlines())
+        )
+        if self._max < len(_str.splitlines()):
+            self._max = len(_str.splitlines())
+
+        if len(_str.splitlines()) >= 2:
+            self.place(x=self._master._xn + 10, y=10, height=self._hei, width=self._wid)
+        print("Mouse position: (%s %s)" % (event.x, event.y))
+        return
+
+
 if __name__ == "__main__":
     app = ExampleApp()
     # app.geometry('460x460')
+
+    tb = TextBox(app)
+
+    # T = Text(app)  # , height=2, width=30, )  # command=spinbox1_callback)
+    # T.set
+    # hei = 50
+    wid = 200
+    # T.place(x=app._xn + 10, y=10, height=hei, width=wid)
+
+    app.geometry('%dx%d' % (app._xn + 10 + wid + 5, app._yn + 10))
 
     app.mainloop()
