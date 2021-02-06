@@ -119,8 +119,9 @@ class TestScript(unittest.TestCase):
 
     def test_get_neighbour_idx(self):
 
-        _x = 0
-        _y = 0
+        _x = 1
+        _y = 5
+        self._ws._word_search_list = [[x for x in range(7)] for _ in range(7)]
         r = self._ws.get_neighbours(_x, _y)
         print()
         for x in r:
@@ -137,6 +138,7 @@ class TestScript(unittest.TestCase):
         self.base(wst, expected_idx_pair_list, text_to_search)
 
     def test_search_01(self):
+        print()
         wst = word_search_txt_list[1][1:]
         text_to_search = "mazsola"
 

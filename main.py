@@ -13,36 +13,58 @@ class WordSearcher(object):
 
     def _wst_init__(self, __word_search_txt) -> None:
         self._word_search_txt = __word_search_txt
-        self._word_search_list = [["" for i in range(len(__word_search_txt.splitlines()[0]))] for j in range(len(__word_search_txt.splitlines()))]
+        self._word_search_list = []
         self._idx_pair_list = []
         self._idx_distance_list = []
 
     def remove_none(self, _list):
         a = []
         for x in _list:
-          for y in x:
-            if y:
-                a.append(y)
+            for y in x:
+                if y:
+                    a.append(y)
         return a
 
     def gen_word_search_list(self, _word_search_txt):
         self._wst_init__(_word_search_txt)
-        for idx_x, line in enumerate(self._word_search_txt.splitlines()):
+        for line in self._word_search_txt.splitlines():
             _tmp_list = []
-            for idx_y, char in enumerate(line):
-                self._word_search_list[idx_x][idx_y] = char
+            for char in line:
+                _tmp_list.append(char)
+            self._word_search_list.append(_tmp_list)
 
     def get_neighbours(self, x, y):
         final_top = []
+
+        def less_or_eq_than_zero(x_y):
+            x, y = x_y
+            if (x < 0 or y < 0):
+                return True
+            return False
+
+        def greater_or_eq_than_ws_list(x_y):
+            x, y = x_y
+            if (x >= len(self._word_search_list) or y >= len(self._word_search_list)):
+                return True
+            return False
         for i in range(-1, 2):
             left = [x + i, y - 1]
             middle = [x + i, y]
             right = [x + i, y + 1]
-            if not (left[0] >= 0 and left[1] >= 0):
+            # if not (left[0] >= 0 and left[1] >= 0):
+            #     left = None
+            # if not (left[0] >= 0 and left[1] >= 0) or not (left[0] < len(self._word_search_list) and left[1] < len(self._word_search_list[0])):
+            # if (left[0] <= 0 or left[1] <= 0) or (left[0] >= len(self._word_search_list) or left[1] >= len(self._word_search_list[0])):
+            # if less_or_eq_than_zero(left) or (left[0] >= len(self._word_search_list) or left[1] >= len(self._word_search_list[0])):
+            if less_or_eq_than_zero(left) or greater_or_eq_than_ws_list(left):
                 left = None
-            if not (middle[0] >= 0 and middle[1] >= 0) or i == 0:
+            # if not (middle[0] >= 0 and middle[1] >= 0) or i == 0:
+            #     middle = None
+            if less_or_eq_than_zero(middle) or greater_or_eq_than_ws_list(middle) or i == 0:  # not (middle[0] >= 0 and middle[1] >= 0) or i == 0:
                 middle = None
-            if not (right[0] >= 0 and right[1] >= 0):
+            # if not (right[0] >= 0 and right[1] >= 0):
+            #     right = None
+            if less_or_eq_than_zero(right) or greater_or_eq_than_ws_list(right):  # not (right[0] >= 0 and right[1] >= 0):
                 right = None
             final_top.append([left, middle, right])
         return final_top
