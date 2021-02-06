@@ -12,7 +12,6 @@ class WordSearcher(object):
     _match = False
 
     def _wst_init__(self, __word_search_txt) -> None:
-        # super().__init__()
         self._word_search_txt = __word_search_txt
         self._word_search_list = [["" for i in range(len(__word_search_txt.splitlines()[0]))] for j in range(len(__word_search_txt.splitlines()))]
         self._idx_pair_list = []
@@ -21,33 +20,21 @@ class WordSearcher(object):
     def remove_none(self, _list):
         a = []
         for x in _list:
-            if x:
-                a.append(x)
+          for y in x:
+            if y:
+                a.append(y)
         return a
 
     def gen_word_search_list(self, _word_search_txt):
         self._wst_init__(_word_search_txt)
         for idx_x, line in enumerate(self._word_search_txt.splitlines()):
-            # print(line)
+            _tmp_list = []
             for idx_y, char in enumerate(line):
-                # print(char, idx_x, idx_y)
-                # print(
-                #     char, idx_x, idx_y, end=", "
-                # )
                 self._word_search_list[idx_x][idx_y] = char
-            # lineResult = libLAPFF.parseLine(line)
-            # print()
 
-    # print(
-    #     word_search_list
-    # )
-    # print()
-
-    def get_neighbour_idx(self, x, y):
+    def get_neighbours(self, x, y):
         final_top = []
-        # top = []
         for i in range(-1, 2):
-            # print(i)
             left = [x + i, y - 1]
             middle = [x + i, y]
             right = [x + i, y + 1]
@@ -57,23 +44,17 @@ class WordSearcher(object):
                 middle = None
             if not (right[0] >= 0 and right[1] >= 0):
                 right = None
-            top = [left, middle, right]
-            # top.append([left, middle, right])
-            # print(top)
-            # top = [[x for x in i if x] for i in top]
-            top = self.remove_none(top)
-            top = [i for i in top if i]
-            final_top.extend(top)
-            # top = list(filter(None, i for i in top))
-        # final_top = [ i for i in final_top ]
+            final_top.append([left, middle, right])
         return final_top
+
+    def get_neighbours_arranged(self, x, y):
+        top = self.remove_none(self.get_neighbours(x, y))
+        return top
 
     def found_first_char(self):
         found_msg = None
         found = []
         for idx_x, i in enumerate(self._word_search_list):
-            # if len(found) > 0:
-            #     break
             for idx_y, x in enumerate(i):
                 print(
                     x, end=", "
@@ -122,8 +103,10 @@ class WordSearcher(object):
     def search_match(self, current_idx_pair, letter_idx):
 
         self._idx_pair_list.append(current_idx_pair)
-        for x, y in self.get_neighbour_idx(*current_idx_pair):
-            if self.len_is_ok(x) and self.len_is_ok(y) and self._word_search_list[x][y] == self._text_to_search[letter_idx]:
+        for x, y in self.get_neighbours_arranged(*current_idx_pair):
+            if self.len_is_ok(x) and \
+               self.len_is_ok(y) and \
+               self._word_search_list[x][y] == self._text_to_search[letter_idx]:
                 if letter_idx > 2 and self.is_collinear(x, y):
                     _distance = self.distance(self._idx_pair_list[0], [x, y])
                     if len(self._idx_distance_list) != 0:

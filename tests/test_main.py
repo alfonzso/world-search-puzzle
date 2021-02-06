@@ -117,6 +117,19 @@ class TestScript(unittest.TestCase):
     def teardown_method(self, test_method):
         del self._ws
 
+    def test_get_neighbour_idx(self):
+
+        _x = 0
+        _y = 0
+        r = self._ws.get_neighbours(_x, _y)
+        print()
+        for x in r:
+            for y in x:
+                if y is None:
+                    y = " None "
+                print(y, end=' | ')
+            print()
+
     def test_search_00(self):
         wst = word_search_txt_list[0][1:]
         text_to_search = "mazsola"
